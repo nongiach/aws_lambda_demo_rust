@@ -49,6 +49,12 @@ aws lambda invoke \
 output.json
 ```
 
+## step 5: invoke the function from rust
+```sh
+cd aws_lambda_demo_rust\
+cargo run -- -v --arn rust_lambda
+```
+
 ## Enjoy!
 
 ### other tips
