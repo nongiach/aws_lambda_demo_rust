@@ -4,19 +4,27 @@ Simple AWS lambda demo with rust
 This is just a quick and dirty introduction to AWS lambda with rust
 
 ## step 0: create AWS account
+https://console.aws.amazon.com/
 
 ## step 1: create a role for the AWS lambda
-https://console.aws.amazon.com/iamv2/home?#/roles
+Create a role that will be used by the aws lambda, this role defines the permissions of your lambda.
+By default it requires a AWSLambdaBasicExecutionRole to send logs to cloudtrail.
 
 ### create a role using the above link
+https://console.aws.amazon.com/iamv2/home?#/roles
 AWS Service => lambda => next => search for AWSLambdaBasicExecutionRole => next.
 Name it lambda-basic-execution and click create.
 
-## step 2: compile a rust project ``
+## step 2: statically compile the binary
+We want to statically compile our binary for it to be compatible with the AWS lambda system.
 ```sh
 cargo new lambda_test
-cargo build -p lambda_runtime --release --target x86_64-unknown-linux-gnu
-cp ./target/x86_64-unknown-linux-gnu/release/bootstrap . && zip lambda.zip bootstrap && rm bootstrap
+
+sudo apt install musl-tools
+rustup target add x86_64-unknown-linux-musl
+
+cargo build --release --target x86_64-unknown-linux-musl
+cp ./target/x86_64-unknown-linux-musl/release/bootstrap . && zip lambda.zip bootstrap && rm bootstrap
 ```
 
 ## step 3: create the lambda with the role and the rust compiled code
