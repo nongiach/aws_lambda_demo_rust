@@ -10,7 +10,7 @@ https://console.aws.amazon.com/
 Create a role that will be used by the aws lambda, this role defines the permissions of your lambda.
 By default it requires a AWSLambdaBasicExecutionRole to send logs to cloudtrail.
 
-### create a role using the above link
+### create a role using the bellow link
 https://console.aws.amazon.com/iamv2/home?#/roles
 AWS Service => lambda => next => search for AWSLambdaBasicExecutionRole => next.
 Name it lambda-basic-execution and click create.
@@ -89,12 +89,13 @@ cargo build --release --target x86_64-unknown-linux-musl
 cp ./target/x86_64-unknown-linux-musl/release/bootstrap . && zip lambda.zip bootstrap && rm bootstrap
 ```
 
-#### upload data to s3 bucket
+#### upload data to s3 bucket from rust
 http://jamesmcm.github.io/blog/2020/04/19/data-engineering-with-rust-and-aws-lambda/
 
 
 #### ressources
 https://aws.amazon.com/blogs/opensource/rust-runtime-for-aws-lambda/
 https://adevait.com/rust/deploying-rust-functions-on-aws-lambda
+https://docs.aws.amazon.com/sdk-for-rust/latest/dg/lambda.html
 
 # TITLE:

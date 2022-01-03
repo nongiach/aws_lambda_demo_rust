@@ -21,6 +21,7 @@ fn main() -> Result<(), Box<dyn Error>> {
 }
 
 fn lambda_handler(e: LambdaRequest, _c: Context) -> Result<LambdaResponse, HandlerError> {
+    // Ok(LambdaResponse { lambda_request: LambdaRequest {full_name: "tata".to_string(), message: Some("success is for us".to_string())}} )
     let mut e = e.clone();
     e.full_name = format!("Hello {name}!", name = e.full_name);
     let msg = match e.message {
