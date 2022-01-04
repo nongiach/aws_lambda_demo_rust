@@ -8,8 +8,30 @@ Two goals here:
 
 As a bonus, we also showcase how to run the lambda within a local docker container for debug purpose.
 
-## step 0: create AWS account
+## step 0: create AWS account and setup aws cli
 https://console.aws.amazon.com/
+
+### install AWS cli
+To perform all futur tasks from your terminal install the official AWS cli.
+```
+curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+unzip awscliv2.zip
+sudo ./aws/install
+```
+
+### create the account for AWS cli
+Once your account is created, the best practice is to create a second user other than root to perform all daily actions.
+You can do it here: https://console.aws.amazon.com/iamv2/home?#/users
+Within this same page you have to create tokens for your AWS cli.
+For that create a user and select "programmatic access" instead of password.
+The download the generated csv and import it with AWS cli.
+
+### import the profile within AWS cli
+```sh
+aws configure import --csv file://credentials.csv
+```
+
+More about that here => https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html
 
 ## step 1: create a role for the AWS lambda
 Create a role that will be used by the aws lambda, this role defines the permissions of your lambda.
