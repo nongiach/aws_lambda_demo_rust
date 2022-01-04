@@ -6,6 +6,8 @@ Two goals here:
 * build and upload a lambda rust function => ./lambda_test
 * invoke a lambda function from rust => ./rust_aws_lambda_client
 
+As a bonus, we also showcase how to run the lambda within a local docker container for debug purpose.
+
 ## step 0: create AWS account
 https://console.aws.amazon.com/
 
@@ -21,9 +23,7 @@ Name it lambda-basic-execution and click create.
 ## step 2: statically compile the binary
 We want to statically compile our binary for it to be compatible with the AWS lambda system.
 ```sh
-cargo new lambda_test
-
-sudo apt install musl-tools
+git clone --depth 1 https://github.com/nongiach/aws_lambda_demo_rust
 rustup target add x86_64-unknown-linux-musl
 
 cargo build --release --target x86_64-unknown-linux-musl
@@ -80,7 +80,13 @@ aws lambda list-functions
 aws lambda delete-function --function-name rust_lambda
 ```
 
+#### update function code 
+```sh
+aws lambda update-function-code --function-name rust_lambda --zip-file fileb://lambda.zip
+```
+
 #### start a docker with the current function 
+This runs the binary target/x86_64-unknown-linux-musl/release/bootstrap into a docker container to simulate a local AWS environment.
 ```sh
 docker run --rm \
 -e DOCKER_LAMBDA_STAY_OPEN=1 -p 9001:9001 \
@@ -88,14 +94,19 @@ docker run --rm \
 lambci/lambda:provided main
 ```
 
-#### update function code 
+##### This invokes the function previously launches within docker.
 ```sh
-aws lambda update-function-code --function-name rust_lambda --zip-file fileb://lambda.zip
+aws lambda invoke \
+--endpoint http://localhost:9001 \
+--no-sign-request --function-name=rust_lambda \
+--invocation-type=RequestResponse \
+--payload $(echo '{"fullName": "Martin Luther", "message": null}' | base64 ) \
+output.json
 ```
 
 #### compiling for amazon v1
 ```sh
-sudo apt install musl-tools
+# sudo apt install musl-tools
 rustup target add x86_64-unknown-linux-musl
 cargo build --release --target x86_64-unknown-linux-musl
 cp ./target/x86_64-unknown-linux-musl/release/bootstrap . && zip lambda.zip bootstrap && rm bootstrap
