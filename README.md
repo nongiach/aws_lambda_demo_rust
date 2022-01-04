@@ -2,6 +2,9 @@
 Simple AWS lambda demo with rust
 
 This is just a quick and dirty introduction to AWS lambda with rust
+Two goals here:
+* build and upload a lambda rust function => ./lambda_test
+* invoke a lambda function from rust => ./rust_aws_lambda_client
 
 ## step 0: create AWS account
 https://console.aws.amazon.com/
@@ -54,6 +57,9 @@ output.json
 cd aws_lambda_demo_rust\
 cargo run -- -v --arn rust_lambda
 ```
+
+More here about how to interact with a lambda function from rust
+https://docs.rs/aws-sdk-lambda/0.3.0/aws_sdk_lambda/client/struct.Client.html#method.invoke
 
 ## Enjoy!
 
