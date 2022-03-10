@@ -1,10 +1,11 @@
 # aws_lambda_demo_rust
 Simple AWS lambda demo with rust
 
-This is just a quick and dirty introduction to AWS lambda with rust
-Two goals here:
+This is just a quick and dirty introduction to AWS lambda with rust, we have two goals here:
 * build and upload a lambda rust function => ./lambda_test
 * invoke a lambda function from rust => ./rust_aws_lambda_client
+
+All of this can be experienced with 0$ because amazon free tier allows you to use AWS lambda for free.
 
 As a bonus, we also showcase how to run the lambda within a local docker container for debug purpose.
 
